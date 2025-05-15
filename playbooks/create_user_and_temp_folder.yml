@@ -1,0 +1,22 @@
+---
+- name: creating user
+  hosts: all
+  gather_facts: no
+  become: true
+  #  vars: 
+  #  user_name: modi
+  vars_files:
+      - /home/ansadmin/playbooks/user.yml
+
+  tasks:
+  - name: creating user {{ user_name }}
+    user:
+      name: "{{ user_name }}"
+  
+  - name: creating a folder owned by {{ user_name }}
+    file: 
+      path: /opt/{{ user_name}}_temp_dir
+      state: directory
+      owner: "{{ user_name }}"
+      group: "{{user_name}}"
+      mode: 0755

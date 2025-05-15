@@ -1,0 +1,39 @@
+--- 
+- name: installing httpd web server
+  hosts: all
+  become: true
+  #  gather_facts: no 
+
+  tasks:
+  - name: installing httpd on redhat 
+    yum:
+      name: httpd 
+      state: installed 
+    when: ansible_os_family == "RedHat" 
+    notify: start httpd services 
+
+  - name: installing httpd (apache2) on ubuntu 
+    apt: 
+      name: apache2
+      state: present 
+    when: ansible_os_family == "Debian"
+    notify: start apache2 services
+
+  - copy:
+      name: Copying index.html  
+      src: /home/ansadmin/playbooks/index.html
+      dest: /var/www/html
+
+  handlers: 
+  - name: starting apache2 services
+    service: 
+      name: apache2
+      state: started 
+    when: ansible_os_family == "Debian"
+
+  - name: starting httpd services
+    service: 
+      name: httpd
+      state: started 
+    when: ansible_os_family == "RedHat"
+

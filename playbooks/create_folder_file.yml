@@ -1,0 +1,21 @@
+---
+- name: creating a folder and a file into this folder
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks: 
+  - name: create a floder 
+    file: 
+      path: /home/ansadmin/test-directory
+      state: directory
+      mode: 0755
+      owner: ansadmin
+      group: ansadmin
+  - name: create a file into the recently created folder
+    file: 
+      path: /home/ansadmin/test-directory/testfile.txt
+      state: touch
+      mode: 0755
+      owner: ansadmin 
+      group: ansadmin

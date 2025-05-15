@@ -1,0 +1,5 @@
+---
+group_id: org.uax.devops
+artifact_id: demo-web-project
+version: 1.3
+artifactory_server: 13.95.197.228
